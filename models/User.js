@@ -2,37 +2,37 @@ import mongoose from 'mongoose'
 import bcrypt from 'bcryptjs'
 
 const userSchema = mongoose.Schema({
-  Name: {
+  name: {
     type: String,
     required: true,
     trim: true
   },
 
-  Email: {
+  email: {
     type: String,
     required: true,
     unique: true
   },
-  Password: {
+  password: {
     type: String,
     required: true
   },
-  MemoryVerses: {
+  memoryVerses: {
     type: Array
   }
 })
 
 userSchema.methods.matchPassword = async function (enteredPassword) {
-  return await bcrypt.compare(enteredPassword, this.Password)
+  return await bcrypt.compare(enteredPassword, this.password)
 }
 
 userSchema.pre('save', async function (next) {
-  if (!this.isModified('Password')) {
+  if (!this.isModified('password')) {
     next()
   }
 
   const salt = await bcrypt.genSalt(10)
-  this.Password = await bcrypt.hash(this.Password, salt)
+  this.password = await bcrypt.hash(this.password, salt)
 })
 
 const User = mongoose.model('User', userSchema)
