@@ -1,0 +1,40 @@
+import express from 'express'
+import cors from 'cors'
+import path from 'path'
+import dotenv from 'dotenv'
+import morgan from 'morgan'
+
+import connectDB from './config/db.js'
+
+import userRoutes from './routes/userRoutes.js'
+
+dotenv.config()
+
+// Connect Database
+connectDB()
+
+// init express app
+const app = express()
+
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'))
+}
+
+// Init Middleware
+app.use(express.json())
+app.use(cors())
+
+// Define Routes
+app.use('/api/users', userRoutes)
+
+const port = process.env.PORT || 8000
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.resolve(__dirname, 'client/build')))
+
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'client/build', 'index.html'))
+  )
+}
+
+app.listen(port, () => console.log(`Server running on port ${port}`))
