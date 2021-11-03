@@ -9,7 +9,8 @@ const usersMemoryVersesSchema = mongoose.Schema({
   memoryVerses: [
     {
       memoryVerse: { type: String, required: true },
-      memoryVerseText: { type: String, required: true }
+      memoryVerseText: { type: String, required: true },
+      createdAt: { type: Date, required: true }
     }
   ]
 })

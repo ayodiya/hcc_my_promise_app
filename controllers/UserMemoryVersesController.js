@@ -21,7 +21,11 @@ async function addMemoryVerse (req, res) {
           $push: {
             memoryVerses: {
               $each: [
-                { memoryVerse: memoryVerse, memoryVerseText: memoryVerseText }
+                {
+                  memoryVerse: memoryVerse,
+                  memoryVerseText: memoryVerseText,
+                  createdAt: Date.now()
+                }
               ],
               $position: 0
             }
@@ -36,7 +40,8 @@ async function addMemoryVerse (req, res) {
       memoryVerses: [
         {
           memoryVerse: memoryVerse,
-          memoryVerseText: memoryVerseText
+          memoryVerseText: memoryVerseText,
+          createdAt: Date.now()
         }
       ]
     })
@@ -44,7 +49,6 @@ async function addMemoryVerse (req, res) {
     res.status(201).json({ msg: 'Saved successfully new' })
   } catch (error) {
     res.status(502).json({ msg: 'Server Error' })
-    console.log(error)
   }
 }
 
