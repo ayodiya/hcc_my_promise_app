@@ -7,7 +7,8 @@ import morgan from 'morgan'
 import connectDB from './config/db.js'
 
 import userRoutes from './routes/userRoutes.js'
-import UserMemoryVersesRoutes from './routes/UserMemoryVersesRoutes.js'
+import userMemoryVersesRoutes from './routes/userMemoryVersesRoutes.js'
+import myPromiseRoutes from './routes/myPromiseRoutes.js'
 
 dotenv.config()
 
@@ -26,8 +27,9 @@ app.use(express.json())
 app.use(cors())
 
 // Define Routes
+app.use('/api/mypromise', myPromiseRoutes)
 app.use('/api/users', userRoutes)
-app.use('/api/memoryVerses', UserMemoryVersesRoutes)
+app.use('/api/userMemoryVerses', userMemoryVersesRoutes)
 
 const port = process.env.PORT || 8000
 
