@@ -1,20 +1,27 @@
 import User from '../models/User.js'
+import generateToken from '../utils/generateToken.js'
 
 async function registerUser (req, res) {
   const { name, email, password } = req.body
 
   try {
-    const user = await User.findOne({ email })
+    const userExists = await User.findOne({ email })
 
-    if (user) {
+    if (userExists) {
       return res.status(400).json({ msg: 'User already exists' })
     }
-    const newUser = await User.create({
+    const user = await User.create({
       name,
       email,
       password
     })
-    res.json(newUser)
+
+    res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      token: generateToken(user._id)
+    })
   } catch (error) {
     res.status(502).json({ msg: 'Server Error' })
   }
@@ -26,13 +33,12 @@ async function loginUser (req, res) {
   try {
     const user = await User.findOne({ email })
 
-    console.log('this is user', user)
-
     if (user && (await user.matchPassword(password))) {
-      return res.json({
+      return res.status(200).json({
         _id: user._id,
         name: user.name,
-        email: user.email
+        email: user.email,
+        token: generateToken(user._id)
       })
     } else {
       return res.status(401).json({ msg: 'Invalid email or password' })
