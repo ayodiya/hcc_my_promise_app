@@ -1,5 +1,5 @@
 {
-  "name": "HCC_my_promise_generator",
+  "name": "hcc_my_promise_app_backend",
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
