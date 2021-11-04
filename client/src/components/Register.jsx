@@ -1,12 +1,13 @@
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import Slide from '@mui/material/Slide'
+import { Link } from 'react-router-dom'
 import { Formik } from 'formik'
-import { useParams } from 'react-router-dom'
 
 import InputField from './InputField'
 import InputFieldError from './InputFieldError'
 import ButtonComponent from './ButtonComponent'
+
 import formValidator, {
   NAME,
   NAME_LABEL,
@@ -23,9 +24,6 @@ const initialValues = {
 }
 
 const Register = () => {
-  const param = useParams()
-  console.log(param)
-
   return (
     <Slide direction='right' in={true}>
       <Box
@@ -75,7 +73,6 @@ const Register = () => {
                 {({
                   handleChange,
                   handleSubmit,
-                  values,
                   errors,
                   touched,
                   isSubmitting,
@@ -132,7 +129,14 @@ const Register = () => {
                         <InputFieldError errorText={errors[PASSWORD]} />
                       )}
                     </Box>
-                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        paddingTop: '15px',
+                        paddingBottom: '20px'
+                      }}
+                    >
                       <ButtonComponent type='submit' buttonText='Submit' />
                     </Box>
                   </Box>
@@ -141,13 +145,24 @@ const Register = () => {
               <Box
                 sx={{
                   display: 'flex',
-                  paddingTop: '15px',
+                  paddingTop: '20px',
                   justifyContent: 'center',
                   color: 'white'
                 }}
               >
                 Already registered ?
-                <Box sx={{ paddingLeft: '10px', fontWeight: 800 }}>LOGIN</Box>
+                <Link to='/login' style={{ textDecoration: 'none' }}>
+                  <Box
+                    sx={{
+                      paddingLeft: '10px',
+                      fontWeight: 800,
+                      color: 'white',
+                      textDecoration: 'underline'
+                    }}
+                  >
+                    LOGIN
+                  </Box>
+                </Link>
               </Box>
             </Box>
           </Box>

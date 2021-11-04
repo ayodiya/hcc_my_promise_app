@@ -3,6 +3,7 @@ import Button from '@mui/material/Button'
 const ButtonComponent = ({ buttonText, ...props }) => {
   return (
     <Button
+      disableElevation
       variant='contained'
       {...props}
       sx={{
@@ -10,7 +11,7 @@ const ButtonComponent = ({ buttonText, ...props }) => {
         fontSize: '20px',
         textTransform: 'none',
         fontWeight: 600,
-        borderRadius: '20px',
+        borderRadius: '15px',
         backgroundColor: 'buttonSuccess.main',
         '&:hover': {
           backgroundColor: 'buttonSuccess.main'
