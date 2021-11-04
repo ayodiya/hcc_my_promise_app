@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import CssBaseline from '@mui/material/CssBaseline'
+import Box from '@mui/material/Box'
 
-function App() {
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { ThemeProvider } from '@mui/material/styles'
+import '@fontsource/oswald'
+
+import Login from './components/Login'
+import Register from './components/Register'
+import { theme } from './utils/theme'
+
+function App () {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Box
+          sx={{
+            backgroundColor: 'secondary.main',
+            minHeight: '100vh',
+            display: 'flex',
+            justifyContent: ' center',
+            fontFamily: 'Oswald'
+          }}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+          <Router>
+            <Routes>
+              <Route exact path='/login' element={<Login />} />
+              <Route exact path='/register' element={<Register />} />
+            </Routes>
+          </Router>
+        </Box>
+      </ThemeProvider>
+    </>
+  )
 }
 
-export default App;
+export default App
