@@ -8,7 +8,7 @@ import { FcGoogle } from 'react-icons/fc'
 import { Link } from 'react-router-dom'
 import { Formik } from 'formik'
 import { useNavigate } from 'react-router-dom'
-import { useState, Fragment } from 'react'
+import { useState, Fragment, useEffect } from 'react'
 
 import InputField from './InputField'
 import InputFieldError from './InputFieldError'
@@ -16,7 +16,7 @@ import ButtonComponent from './ButtonComponent'
 import SocialButton from './SocialButton'
 import apiCall from '../utils/apiCall'
 import Notification from './Notification'
-import { setToken } from '../utils/localStorage'
+import { setToken, getToken } from '../utils/localStorage'
 
 import formValidator, {
   NAME,
@@ -38,12 +38,17 @@ const Register = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
 
+  useEffect(() => {
+    if (getToken('MyPromiseApp') !== null) {
+      return navigate('/')
+    }
+  })
+
   const handleCloseSnackbar = () => {
     setOpenSnackbar(false)
   }
 
   const handleSocialLogin = async user => {
-    console.log(user)
     const { name, email, id } = user.profile
 
     const dataToSubmit = {
@@ -113,7 +118,7 @@ const Register = () => {
                 <Formik
                   initialValues={initialValues}
                   validationSchema={formValidator}
-                  onSubmit={async (values, { setErrors, setSubmitting }) => {
+                  onSubmit={async (values, { setSubmitting }) => {
                     setSubmitting(true)
 
                     try {
@@ -217,9 +222,8 @@ const Register = () => {
                           fontSize: '16px'
                         }}
                       >
-                        Login in with
+                        Register with
                       </Box>
-
                       <Box
                         sx={{ display: 'flex', justifyContent: 'space-evenly' }}
                       >

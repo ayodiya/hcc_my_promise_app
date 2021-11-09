@@ -35,7 +35,7 @@ const MyPromise = () => {
                 sx={{
                   backgroundColor: '#113a9f',
                   width: 300,
-                  height: 200,
+                  minHeight: 200,
                   color: 'white',
                   fontSize: '18px'
                 }}
