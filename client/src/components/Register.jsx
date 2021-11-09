@@ -1,7 +1,10 @@
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import Slide from '@mui/material/Slide'
+import Icon from '@mui/material/Icon'
 import CircularProgress from '@mui/material/CircularProgress'
+import FacebookIcon from '@mui/icons-material/Facebook'
+import { FcGoogle } from 'react-icons/fc'
 import { Link } from 'react-router-dom'
 import { Formik } from 'formik'
 import { useNavigate } from 'react-router-dom'
@@ -10,6 +13,7 @@ import { useState, Fragment } from 'react'
 import InputField from './InputField'
 import InputFieldError from './InputFieldError'
 import ButtonComponent from './ButtonComponent'
+import SocialButton from './SocialButton'
 import apiCall from '../utils/apiCall'
 import Notification from './Notification'
 import { setToken } from '../utils/localStorage'
@@ -37,6 +41,31 @@ const Register = () => {
   const handleCloseSnackbar = () => {
     setOpenSnackbar(false)
   }
+
+  const handleSocialLogin = async user => {
+    console.log(user)
+    const { name, email, id } = user.profile
+
+    const dataToSubmit = {
+      name: name,
+      email: email,
+      password: id
+    }
+
+    try {
+      const { data } = await apiCall('post', 'api/users/register', dataToSubmit)
+
+      setToken('MyPromiseApp', data.token)
+      navigate('/')
+    } catch (error) {
+      setErrorMsg(error.response.data.msg)
+      setOpenSnackbar(true)
+    }
+  }
+
+  // const handleSocialLoginFailure = err => {
+  //   console.error('this is err', err)
+  // }
 
   return (
     <Fragment>
@@ -84,10 +113,7 @@ const Register = () => {
                 <Formik
                   initialValues={initialValues}
                   validationSchema={formValidator}
-                  onSubmit={async (
-                    values,
-                    { setErrors, setSubmitting, setValues }
-                  ) => {
+                  onSubmit={async (values, { setErrors, setSubmitting }) => {
                     setSubmitting(true)
 
                     try {
@@ -168,7 +194,7 @@ const Register = () => {
                           display: 'flex',
                           justifyContent: 'center',
                           paddingTop: '15px',
-                          paddingBottom: '20px'
+                          paddingBottom: '10px'
                         }}
                       >
                         <ButtonComponent
@@ -183,6 +209,57 @@ const Register = () => {
                           }
                         />
                       </Box>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          color: 'white',
+                          fontSize: '16px'
+                        }}
+                      >
+                        Login in with
+                      </Box>
+
+                      <Box
+                        sx={{ display: 'flex', justifyContent: 'space-evenly' }}
+                      >
+                        <SocialButton
+                          type='button'
+                          provider='facebook'
+                          appId='2688787724762125'
+                          onLoginSuccess={handleSocialLogin}
+                          // onLoginFailure={handleSocialLoginFailure}
+                        >
+                          <Box sx={{ alignItems: 'center' }}>
+                            <FacebookIcon
+                              sx={{
+                                color: 'blue',
+                                alignSelf: 'center',
+                                fontSize: '40px'
+                              }}
+                            />
+                          </Box>
+                        </SocialButton>
+                        <SocialButton
+                          type='button'
+                          provider='google'
+                          appId='323886703000-ceqb0hosab349j66amfdsi34bubeuora.apps.googleusercontent.com'
+                          onLoginSuccess={handleSocialLogin}
+                          // onLoginFailure={handleSocialLoginFailure}
+                        >
+                          <Box sx={{ alignItems: 'center' }}>
+                            <Icon
+                              sx={{
+                                color: 'blue',
+                                alignSelf: 'center',
+                                fontSize: '40px'
+                              }}
+                            >
+                              <FcGoogle />
+                            </Icon>
+                          </Box>
+                        </SocialButton>
+                      </Box>
                     </Box>
                   )}
                 </Formik>
@@ -190,6 +267,7 @@ const Register = () => {
                   sx={{
                     display: 'flex',
                     paddingTop: '20px',
+                    paddingBottom: ' 100px',
                     justifyContent: 'center',
                     color: 'white'
                   }}
