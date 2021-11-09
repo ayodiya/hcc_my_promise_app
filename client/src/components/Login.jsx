@@ -22,135 +22,140 @@ const initialValues = {
 const Login = () => {
   return (
     <Slide direction='left' in={true}>
-      <Box
-        sx={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          alignSelf: 'center',
-          '& > :not(style)': {
-            m: 1,
-            minWidth: 300,
-            minHeight: { xs: 600, md: 500 }
-          }
-        }}
-      >
-        <Paper
-          elevation={6}
-          sx={{ backgroundColor: 'primary.main', borderRadius: '10px' }}
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            alignSelf: 'center',
+            '& > :not(style)': {
+              m: 1,
+              minWidth: 300,
+              minHeight: { xs: 600, md: 500 }
+            }
+          }}
         >
-          <Box
+          <Paper
+            elevation={6}
             sx={{
-              display: 'flex',
-              justifyContent: 'center'
+              backgroundColor: 'primary.main',
+              borderRadius: '10px'
             }}
           >
             <Box
               sx={{
                 display: 'flex',
-                flexDirection: 'column',
-                paddingTop: '30px'
+                justifyContent: 'center'
               }}
             >
               <Box
                 sx={{
-                  color: 'white',
-                  fontSize: '40px',
-                  fontWeight: 900,
                   display: 'flex',
-                  justifyContent: 'center'
+                  flexDirection: 'column',
+                  paddingTop: '30px'
                 }}
               >
-                Login
-              </Box>
-              <Formik
-                initialValues={initialValues}
-                validationSchema={formValidator}
-              >
-                {({
-                  handleChange,
-                  handleSubmit,
-                  errors,
-                  touched,
-                  isSubmitting,
-                  handleBlur
-                }) => (
-                  <Box
-                    component='form'
-                    sx={{
-                      '& > :not(style)': { m: 1, width: '25ch' },
-                      display: 'flex',
-                      flexDirection: 'column'
-                    }}
-                    noValidate
-                    autoComplete='off'
-                    onSubmit={handleSubmit}
-                  >
-                    <Box>
-                      <InputField
-                        error={touched[EMAIL] && errors[EMAIL] !== undefined}
-                        onBlur={handleBlur}
-                        type='email'
-                        name={EMAIL}
-                        labelName={EMAIL_LABEL}
-                        onChange={handleChange}
-                      />
-                      {errors[EMAIL] && touched[EMAIL] && (
-                        <InputFieldError errorText={errors[EMAIL]} />
-                      )}
+                <Box
+                  sx={{
+                    color: 'white',
+                    fontSize: '40px',
+                    fontWeight: 900,
+                    display: 'flex',
+                    justifyContent: 'center'
+                  }}
+                >
+                  Login
+                </Box>
+                <Formik
+                  initialValues={initialValues}
+                  validationSchema={formValidator}
+                >
+                  {({
+                    handleChange,
+                    handleSubmit,
+                    errors,
+                    touched,
+                    isSubmitting,
+                    handleBlur
+                  }) => (
+                    <Box
+                      component='form'
+                      sx={{
+                        '& > :not(style)': { m: 1, width: '25ch' },
+                        display: 'flex',
+                        flexDirection: 'column'
+                      }}
+                      noValidate
+                      autoComplete='off'
+                      onSubmit={handleSubmit}
+                    >
+                      <Box>
+                        <InputField
+                          error={touched[EMAIL] && errors[EMAIL] !== undefined}
+                          onBlur={handleBlur}
+                          type='email'
+                          name={EMAIL}
+                          labelName={EMAIL_LABEL}
+                          onChange={handleChange}
+                        />
+                        {errors[EMAIL] && touched[EMAIL] && (
+                          <InputFieldError errorText={errors[EMAIL]} />
+                        )}
+                      </Box>
+                      <Box>
+                        <InputField
+                          error={
+                            touched[PASSWORD] && errors[PASSWORD] !== undefined
+                          }
+                          onBlur={handleBlur}
+                          name={PASSWORD}
+                          type='password'
+                          labelName={PASSWORD_LABEL}
+                          onChange={handleChange}
+                        />
+                        {errors[PASSWORD] && touched[PASSWORD] && (
+                          <InputFieldError errorText={errors[PASSWORD]} />
+                        )}
+                      </Box>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          paddingTop: '15px',
+                          paddingBottom: '20px'
+                        }}
+                      >
+                        <ButtonComponent type='submit' buttonText='Submit' />
+                      </Box>
                     </Box>
-                    <Box>
-                      <InputField
-                        error={
-                          touched[PASSWORD] && errors[PASSWORD] !== undefined
-                        }
-                        onBlur={handleBlur}
-                        name={PASSWORD}
-                        type='password'
-                        labelName={PASSWORD_LABEL}
-                        onChange={handleChange}
-                      />
-                      {errors[PASSWORD] && touched[PASSWORD] && (
-                        <InputFieldError errorText={errors[PASSWORD]} />
-                      )}
-                    </Box>
+                  )}
+                </Formik>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    paddingTop: '20px',
+                    justifyContent: 'center',
+                    color: 'white'
+                  }}
+                >
+                  Already registered ?
+                  <Link to='/register' style={{ textDecoration: 'none' }}>
                     <Box
                       sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        paddingTop: '15px',
-                        paddingBottom: '20px'
+                        paddingLeft: '10px',
+                        fontWeight: 800,
+                        color: 'white',
+                        textDecoration: 'underline'
                       }}
                     >
-                      <ButtonComponent type='submit' buttonText='Submit' />
+                      REGISTER
                     </Box>
-                  </Box>
-                )}
-              </Formik>
-              <Box
-                sx={{
-                  display: 'flex',
-                  paddingTop: '20px',
-                  justifyContent: 'center',
-                  color: 'white'
-                }}
-              >
-                Already registered ?
-                <Link to='/register' style={{ textDecoration: 'none' }}>
-                  <Box
-                    sx={{
-                      paddingLeft: '10px',
-                      fontWeight: 800,
-                      color: 'white',
-                      textDecoration: 'underline'
-                    }}
-                  >
-                    REGISTER
-                  </Box>
-                </Link>
+                  </Link>
+                </Box>
               </Box>
             </Box>
-          </Box>
-        </Paper>
+          </Paper>
+        </Box>
       </Box>
     </Slide>
   )

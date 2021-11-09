@@ -8,6 +8,7 @@ export const theme = createTheme({
     secondary: {
       main: '#ECF7FF'
     },
-    buttonSuccess: { main: '#5CB85C' }
+    buttonSuccess: { main: '#5CB85C' },
+    buttonWarning: { main: '#C9302C' }
   }
 })
