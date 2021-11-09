@@ -24,10 +24,5 @@ export default Yup.object({
   [PASSWORD]: Yup.string()
     .label(PASSWORD_LABEL)
     .required()
-    .min(8),
-  [CONFIRM_PASSWORD]: Yup.string()
-    .oneOf([Yup.ref('password'), null], 'Passwords must match')
-    .label(CONFIRM_PASSWORD_LABEL)
-    .required()
     .min(8)
 })
