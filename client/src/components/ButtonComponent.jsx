@@ -1,6 +1,6 @@
 import Button from '@mui/material/Button'
 
-const ButtonComponent = ({ buttonText, ...props }) => {
+const ButtonComponent = ({ buttonText, buttonColor, ...props }) => {
   return (
     <Button
       disableElevation
@@ -12,9 +12,9 @@ const ButtonComponent = ({ buttonText, ...props }) => {
         textTransform: 'none',
         fontWeight: 600,
         borderRadius: '15px',
-        backgroundColor: 'buttonSuccess.main',
+        backgroundColor: buttonColor || 'buttonSuccess.main',
         '&:hover': {
-          backgroundColor: 'buttonSuccess.main'
+          backgroundColor: buttonColor || 'buttonSuccess.main'
         }
       }}
     >

@@ -1,12 +1,13 @@
 import CssBaseline from '@mui/material/CssBaseline'
-import Box from '@mui/material/Box'
-
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import { ThemeProvider } from '@mui/material/styles'
 import '@fontsource/oswald'
 
+import Background from './components/Background'
 import Login from './components/Login'
 import Register from './components/Register'
+import MyPromise from './components/MyPromise'
+import NotFound from './components/NotFound'
 import { theme } from './utils/theme'
 
 function App () {
@@ -14,22 +15,16 @@ function App () {
     <>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Box
-          sx={{
-            backgroundColor: 'secondary.main',
-            minHeight: '100vh',
-            display: 'flex',
-            justifyContent: ' center',
-            fontFamily: 'Oswald'
-          }}
-        >
-          <Router>
+        <Router>
+          <Background>
             <Routes>
-              <Route exact path='/login' element={<Login />} />
-              <Route exact path='/register' element={<Register />} />
+              <Route path='/' element={<MyPromise />} />
+              <Route path='/login' element={<Login />} />
+              <Route path='/register' element={<Register />} />
+              <Route path='*' element={<NotFound />} />
             </Routes>
-          </Router>
-        </Box>
+          </Background>
+        </Router>
       </ThemeProvider>
     </>
   )
