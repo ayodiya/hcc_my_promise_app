@@ -2,10 +2,26 @@ import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import Zoom from '@mui/material/Zoom'
 import LogoutIcon from '@mui/icons-material/Logout'
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import ButtonComponent from './ButtonComponent'
+import { removeToken, getToken, tokenName } from '../utils/localStorage'
 
 const MyPromise = () => {
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (getToken(tokenName) === null) {
+      navigate('/login')
+    }
+  })
+
+  const handleLogout = () => {
+    removeToken(tokenName)
+    navigate('/login')
+  }
+
   return (
     <>
       <Zoom direction='left' in={true}>
@@ -76,6 +92,7 @@ const MyPromise = () => {
                   buttonColor='buttonWarning.main'
                   buttonText='Logout'
                   endIcon={<LogoutIcon />}
+                  onClick={handleLogout}
                 />
               </Box>
             </Paper>
