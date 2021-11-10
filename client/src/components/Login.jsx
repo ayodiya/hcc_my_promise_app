@@ -48,7 +48,6 @@ const Login = () => {
     const { name, email, id } = user.profile
 
     const dataToSubmit = {
-      name: name,
       email: email,
       password: id
     }
