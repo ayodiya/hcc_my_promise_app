@@ -45,7 +45,7 @@ const Login = () => {
   }
 
   const handleSocialLogin = async user => {
-    const { name, email, id } = user.profile
+    const { email, id } = user.profile
 
     const dataToSubmit = {
       email: email,
