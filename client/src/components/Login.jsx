@@ -17,12 +17,12 @@ import ButtonComponent from './ButtonComponent'
 import SocialButton from './SocialButton'
 import apiCall from '../utils/apiCall'
 import { setToken, getToken } from '../utils/localStorage'
-import formValidator, {
+import loginValidator, {
   EMAIL,
   EMAIL_LABEL,
   PASSWORD,
   PASSWORD_LABEL
-} from '../validators/formValidator'
+} from '../validators/loginValidator'
 
 const initialValues = {
   [EMAIL]: '',
@@ -112,7 +112,7 @@ const Login = () => {
                   </Box>
                   <Formik
                     initialValues={initialValues}
-                    validationSchema={formValidator}
+                    validationSchema={loginValidator}
                     onSubmit={async (values, { setSubmitting }) => {
                       setSubmitting(true)
 
