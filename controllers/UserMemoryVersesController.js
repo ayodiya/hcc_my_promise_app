@@ -33,7 +33,7 @@ async function addMemoryVerse (req, res) {
         }
       )
 
-      return res.status(201).json({ msg: 'Saved successfully update' })
+      return res.status(201)
     }
     await UsersMemoryVerses.create({
       user: req.user.id,
@@ -46,10 +46,22 @@ async function addMemoryVerse (req, res) {
       ]
     })
 
-    res.status(201).json({ msg: 'Saved successfully new' })
+    res.status(201)
   } catch (error) {
     res.status(502).json({ msg: 'Server Error' })
   }
 }
 
-export { addMemoryVerse }
+async function getMemoryVerses (req, res) {
+  const { id } = req.user
+
+  try {
+    const memoryVerses = await UsersMemoryVerses.find({ user: id })
+
+    res.status(200).json(memoryVerses)
+  } catch (error) {
+    res.status(502).json({ msg: 'Server Error' })
+  }
+}
+
+export { addMemoryVerse, getMemoryVerses }

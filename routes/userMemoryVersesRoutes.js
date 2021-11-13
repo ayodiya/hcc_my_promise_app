@@ -1,10 +1,14 @@
 import express from 'express'
 const router = express.Router()
 
-import { addMemoryVerse } from '../controllers/UserMemoryVersesController.js'
+import {
+  addMemoryVerse,
+  getMemoryVerses
+} from '../controllers/UserMemoryVersesController.js'
 
 import { auth } from '../middleware/authMiddleware.js'
 
-router.post('/addMemoryVerse', auth, addMemoryVerse)
+router.post('/addmemoryverse', auth, addMemoryVerse)
+router.get('/getmemoryverses', auth, getMemoryVerses)
 
 export default router

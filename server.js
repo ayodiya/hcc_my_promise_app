@@ -29,7 +29,7 @@ app.use(cors())
 // Define Routes
 app.use('/api/mypromise', myPromiseRoutes)
 app.use('/api/users', userRoutes)
-app.use('/api/userMemoryVerses', userMemoryVersesRoutes)
+app.use('/api/usermemoryverses', userMemoryVersesRoutes)
 
 const port = process.env.PORT || 8000
 

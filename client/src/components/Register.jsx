@@ -18,14 +18,14 @@ import apiCall from '../utils/apiCall'
 import Notification from './Notification'
 import { setToken, getToken } from '../utils/localStorage'
 
-import formValidator, {
+import registerValidator, {
   NAME,
   NAME_LABEL,
   EMAIL,
   EMAIL_LABEL,
   PASSWORD,
   PASSWORD_LABEL
-} from '../validators/formValidator'
+} from '../validators/registerValidator'
 
 const initialValues = {
   [NAME]: '',
@@ -67,10 +67,6 @@ const Register = () => {
       setOpenSnackbar(true)
     }
   }
-
-  // const handleSocialLoginFailure = err => {
-  //   console.error('this is err', err)
-  // }
 
   return (
     <Fragment>
@@ -117,7 +113,7 @@ const Register = () => {
                 </Box>
                 <Formik
                   initialValues={initialValues}
-                  validationSchema={formValidator}
+                  validationSchema={registerValidator}
                   onSubmit={async (values, { setSubmitting }) => {
                     setSubmitting(true)
 
