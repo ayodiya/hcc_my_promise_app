@@ -107,7 +107,7 @@ const MyPromise = () => {
 
   return (
     <>
-      <Zoom direction='left' in={true}>
+      <Zoom direction='left' in>
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <Box
             sx={{
@@ -139,43 +139,45 @@ const MyPromise = () => {
                   fontSize: '18px'
                 }}
               >
-                {thePromise?.memoryVerse === 'loading' ? (
-                  <Box
-                    sx={{
-                      padding: '30px',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      textAlign: 'center'
-                    }}
-                  >
-                    <Skeleton animation='wave' />
-                    <Skeleton animation='wave' />
-                    <Skeleton animation='wave' />
-                    <Skeleton animation='wave' />
-                  </Box>
-                ) : (
-                  <>
+                {thePromise?.memoryVerse === 'loading'
+                  ? (
                     <Box
                       sx={{
                         padding: '30px',
                         display: 'flex',
-                        justifyContent: 'center',
+                        flexDirection: 'column',
                         textAlign: 'center'
                       }}
                     >
-                      {thePromise?.memoryVerseText}
+                      <Skeleton animation='wave' />
+                      <Skeleton animation='wave' />
+                      <Skeleton animation='wave' />
+                      <Skeleton animation='wave' />
                     </Box>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        paddingBottom: '20px'
-                      }}
-                    >
-                      {thePromise?.memoryVerse}
-                    </Box>
-                  </>
-                )}
+                    )
+                  : (
+                    <>
+                      <Box
+                        sx={{
+                          padding: '30px',
+                          display: 'flex',
+                          justifyContent: 'center',
+                          textAlign: 'center'
+                        }}
+                      >
+                        {thePromise?.memoryVerseText}
+                      </Box>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          paddingBottom: '20px'
+                        }}
+                      >
+                        {thePromise?.memoryVerse}
+                      </Box>
+                    </>
+                    )}
               </Box>
               <Box
                 sx={{
