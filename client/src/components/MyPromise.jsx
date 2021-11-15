@@ -19,7 +19,7 @@ const MyPromise = () => {
   const [thePromise, setThePromise] = useState({})
   const [canGetNewPromise, setCanGetNewPromise] = useState(false)
 
-  const getUserMemoryVerses = async () => {
+  const getUserMemoryVerses = useCallback(async () => {
     const token = getToken(tokenName)
     try {
       const { data } = await apiCall(
@@ -36,7 +36,7 @@ const MyPromise = () => {
       setErrorMsg(error.response.data.msg)
       setOpenSnackbar(true)
     }
-  }
+  }, [])
 
   const checkIfTheWeek = useCallback(() => {
     if (thePromise?.createdAt !== undefined) {
@@ -47,15 +47,16 @@ const MyPromise = () => {
   }, [thePromise?.createdAt])
 
   useEffect(() => {
-    let isSubscribed = true
+    getUserMemoryVerses()
+  }, [getUserMemoryVerses])
+
+  useEffect(() => {
     if (getToken(tokenName) === null) {
       navigate('/login')
     }
-    getUserMemoryVerses()
+    // getUserMemoryVerses()
     checkIfTheWeek()
-    isSubscribed = false
-    return () => isSubscribed
-  }, [navigate, thePromise, checkIfTheWeek])
+  }, [navigate, thePromise, checkIfTheWeek, getUserMemoryVerses])
 
   const handleCloseSnackbar = () => {
     setOpenSnackbar(false)
