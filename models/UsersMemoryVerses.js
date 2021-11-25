@@ -12,7 +12,11 @@ const usersMemoryVersesSchema = mongoose.Schema({
       memoryVerseText: { type: String, required: true },
       createdAt: { type: Date, required: true }
     }
-  ]
+  ],
+  memoryVersesIndex: {
+    type: Array
+
+  }
 })
 
 const UsersMemoryVerses = mongoose.model(

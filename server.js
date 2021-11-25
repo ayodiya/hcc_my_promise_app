@@ -6,7 +6,7 @@ import morgan from 'morgan'
 
 import connectDB from './config/db.js'
 
-import userRoutes from './routes/userRoutes.js'
+import authRoutes from './routes/authRoutes.js'
 import userMemoryVersesRoutes from './routes/userMemoryVersesRoutes.js'
 import myPromiseRoutes from './routes/myPromiseRoutes.js'
 
@@ -28,7 +28,7 @@ app.use(cors())
 
 // Define Routes
 app.use('/api/mypromise', myPromiseRoutes)
-app.use('/api/users', userRoutes)
+app.use('/api/users', authRoutes)
 app.use('/api/usermemoryverses', userMemoryVersesRoutes)
 
 const port = process.env.PORT || 8000
