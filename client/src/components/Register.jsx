@@ -5,9 +5,8 @@ import Icon from '@mui/material/Icon'
 import CircularProgress from '@mui/material/CircularProgress'
 import FacebookIcon from '@mui/icons-material/Facebook'
 import { FcGoogle } from 'react-icons/fc'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Formik } from 'formik'
-import { useNavigate } from 'react-router-dom'
 import { useState, Fragment, useEffect } from 'react'
 
 import InputField from './InputField'
@@ -69,8 +68,8 @@ const Register = () => {
   }
 
   return (
-    <Fragment>
-      <Slide direction='right' in={true}>
+    <>
+      <Slide direction='right' in>
         <Box
           sx={{
             display: 'flex',
@@ -202,11 +201,13 @@ const Register = () => {
                           disabled={isSubmitting}
                           type='submit'
                           buttonText={
-                            isSubmitting ? (
-                              <CircularProgress sx={{ color: 'white' }} />
-                            ) : (
-                              'Submit'
-                            )
+                            isSubmitting
+                              ? (
+                                <CircularProgress sx={{ color: 'white' }} />
+                                )
+                              : (
+                                  'Submit'
+                                )
                           }
                         />
                       </Box>
@@ -297,7 +298,7 @@ const Register = () => {
         errorMsg={errorMsg}
         severity='error'
       />
-    </Fragment>
+    </>
   )
 }
 

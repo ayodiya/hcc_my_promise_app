@@ -8,6 +8,6 @@ const router = express.Router()
 
 router.post('/register', registerUser)
 router.post('/login', loginUser)
-router.post('/forgotPassword', auth, forgotPassword)
+router.post('/forgotPassword', forgotPassword)
 
 export default router

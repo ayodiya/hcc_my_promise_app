@@ -51,7 +51,7 @@ async function loginUser (req, res) {
 }
 
 async function forgotPassword (req, res) {
-  const { id } = req.user
+  const { email } = req.body
 
   const client = ses.createClient({
     key: process.env.AWS_ACCESS_KEY_ID,
@@ -59,15 +59,15 @@ async function forgotPassword (req, res) {
     amazon: process.env.AWS_SERVER
   })
 
-  const userExists = await User.findOne({ id })
+  const userExists = await User.findOne({ email })
 
   if (!userExists) {
     return res.status(400).json({ msg: 'User with the email doesn\'t exists' })
   }
 
-  const { name, email } = userExists
+  const { name, _id } = userExists
 
-  const token = generateToken(id, '2h')
+  const token = generateToken(_id, '2h')
 
   client.sendEmail({
     to: 'devayodiya@gmail.com',
