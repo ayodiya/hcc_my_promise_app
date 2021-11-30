@@ -21,6 +21,7 @@ const MyPromise = () => {
 
   const getUserMemoryVerses = useCallback(async () => {
     const token = getToken(tokenName)
+
     try {
       const { data } = await apiCall(
         'get',
@@ -67,26 +68,26 @@ const MyPromise = () => {
     navigate('/login')
   }
 
-  const addMemoryVerseToUser = async (token, memoryVerse, memoryVerseText) => {
-    const dataToSubmit = {
-      memoryVerse: memoryVerse,
-      memoryVerseText: memoryVerseText
-    }
+  // const addMemoryVerseToUser = async (token, memoryVerse, memoryVerseText) => {
+  //   const dataToSubmit = {
+  //     memoryVerse: memoryVerse,
+  //     memoryVerseText: memoryVerseText
+  //   }
 
-    try {
-      await apiCall(
-        'post',
-        '/api/usermemoryverses/addmemoryverse',
-        dataToSubmit,
-        {
-          Bearer: token
-        }
-      )
-    } catch (error) {
-      setErrorMsg(error.response.data.msg)
-      setOpenSnackbar(true)
-    }
-  }
+  //   try {
+  //     await apiCall(
+  //       'post',
+  //       '/api/usermemoryverses/addmemoryverse',
+  //       dataToSubmit,
+  //       {
+  //         Bearer: token
+  //       }
+  //     )
+  //   } catch (error) {
+  //     setErrorMsg(error.response.data.msg)
+  //     setOpenSnackbar(true)
+  //   }
+  // }
 
   const handleGetMyPromise = async () => {
     const token = getToken(tokenName)
@@ -98,7 +99,7 @@ const MyPromise = () => {
       })
 
       const { memoryVerse, memoryVerseText } = data.myPromises
-      addMemoryVerseToUser(token, memoryVerse, memoryVerseText)
+      // addMemoryVerseToUser(token, memoryVerse, memoryVerseText)
       setThePromise(data.myPromises)
     } catch (error) {
       setErrorMsg(error.response?.data.msg)
@@ -190,7 +191,7 @@ const MyPromise = () => {
                 <ButtonComponent
                   buttonText='My Promise'
                   onClick={handleGetMyPromise}
-                  disabled={canGetNewPromise}
+                  // disabled={canGetNewPromise}
                 />
               </Box>
               <Box

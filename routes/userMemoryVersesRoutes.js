@@ -1,5 +1,4 @@
 import express from 'express'
-const router = express.Router()
 
 import {
   addMemoryVerse,
@@ -7,6 +6,7 @@ import {
 } from '../controllers/UserMemoryVersesController.js'
 
 import { auth } from '../middleware/authMiddleware.js'
+const router = express.Router()
 
 router.post('/addmemoryverse', auth, addMemoryVerse)
 router.get('/getmemoryverses', auth, getMemoryVerses)
