@@ -2,6 +2,7 @@ import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import Zoom from '@mui/material/Zoom'
 import Skeleton from '@mui/material/Skeleton'
+import CircularProgress from '@mui/material/CircularProgress'
 import LogoutIcon from '@mui/icons-material/Logout'
 import moment from 'moment'
 import { useEffect, useState, useCallback } from 'react'
@@ -48,14 +49,10 @@ const MyPromise = () => {
   }, [thePromise?.createdAt])
 
   useEffect(() => {
-    getUserMemoryVerses()
-  }, [getUserMemoryVerses])
-
-  useEffect(() => {
     if (getToken(tokenName) === null) {
       navigate('/login')
     }
-    // getUserMemoryVerses()
+    getUserMemoryVerses()
     checkIfTheWeek()
   }, [navigate, thePromise, checkIfTheWeek, getUserMemoryVerses])
 
@@ -68,27 +65,6 @@ const MyPromise = () => {
     navigate('/login')
   }
 
-  // const addMemoryVerseToUser = async (token, memoryVerse, memoryVerseText) => {
-  //   const dataToSubmit = {
-  //     memoryVerse: memoryVerse,
-  //     memoryVerseText: memoryVerseText
-  //   }
-
-  //   try {
-  //     await apiCall(
-  //       'post',
-  //       '/api/usermemoryverses/addmemoryverse',
-  //       dataToSubmit,
-  //       {
-  //         Bearer: token
-  //       }
-  //     )
-  //   } catch (error) {
-  //     setErrorMsg(error.response.data.msg)
-  //     setOpenSnackbar(true)
-  //   }
-  // }
-
   const handleGetMyPromise = async () => {
     const token = getToken(tokenName)
     setThePromise({ memoryVerse: 'loading' })
@@ -98,9 +74,7 @@ const MyPromise = () => {
         Bearer: token
       })
 
-      const { memoryVerse, memoryVerseText } = data.myPromises
-      // addMemoryVerseToUser(token, memoryVerse, memoryVerseText)
-      setThePromise(data.myPromises)
+      setThePromise(data)
     } catch (error) {
       setErrorMsg(error.response?.data.msg)
       setOpenSnackbar(true)
@@ -148,13 +122,11 @@ const MyPromise = () => {
                         padding: '30px',
                         display: 'flex',
                         flexDirection: 'column',
-                        textAlign: 'center'
+                        textAlign: 'center',
+                        alignItems: 'center'
                       }}
                     >
-                      <Skeleton animation='wave' />
-                      <Skeleton animation='wave' />
-                      <Skeleton animation='wave' />
-                      <Skeleton animation='wave' />
+                      <CircularProgress sx={{ color: 'white' }} />
                     </Box>
                     )
                   : (
