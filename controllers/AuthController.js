@@ -1,4 +1,4 @@
-import ses from 'node-ses'
+import nodemailer from 'nodemailer'
 
 import User from '../models/User.js'
 import generateToken from '../utils/generateToken.js'
@@ -53,35 +53,42 @@ async function loginUser (req, res) {
 async function forgotPassword (req, res) {
   const { email } = req.body
 
-  const client = ses.createClient({
-    key: process.env.AWS_ACCESS_KEY_ID,
-    secret: process.env.AWS_SECRET_ACCESS_KEY,
-    amazon: process.env.AWS_SERVER
-  })
-
-  const userExists = await User.findOne({ email })
-
-  if (!userExists) {
-    return res.status(400).json({ msg: 'User with the email doesn\'t exists' })
-  }
-
-  const { name, _id } = userExists
-
-  const token = generateToken(_id, '2h')
-
-  client.sendEmail({
-    to: 'devayodiya@gmail.com',
-    from: 'hccmypromiseapp@gmail.com',
-    subject: 'HCC - My Promise App  Password Reset',
-    message: `<h5>Hello ${name}<p>Click on the link below to reset you password. Link is valid for 2 hours.</p><p>http://localhost:3000/forgot-password/${token}</p>`
-
-  }, function (err, data) {
-    if (data) {
-      return res.status(200).json({ msg: 'A message has been sent to your email' })
-    } if (err) {
-      res.status(502).json({ msg: 'Server Error' })
+  const transporter = nodemailer.createTransport({
+    host: process.env.SMTP_HOST,
+    port: process.env.SMTP_PORT,
+    secure: true,
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS
     }
   })
+
+  try {
+    const userExists = await User.findOne({ email })
+
+    if (!userExists) {
+      return res.status(400).json({ msg: 'User with the email doesn\'t exists' })
+    }
+
+    const { name, _id } = userExists
+
+    const token = generateToken(_id, '2h')
+
+    await transporter.sendMail({
+      from: 'promiseslip@harvesthousecc.org', // sender address
+      to: 'devayodiya@gmail.com', // list of receivers
+      subject: 'My Promise  - Forgot Password ', // Subject line
+      html: `<h2>Hello ${name}</h2><p>Click the link below to reset your password.</p><p>The link is only valid for 2hrs</p><p>${process.env.BASE_URL}/reset-password/${token}</p>`
+
+    })
+
+    return res.status(200).json({ msg: 'Please check your email' })
+  } catch (error) {
+    res.status(502).json({ msg: 'Server Error' })
+  }
+  // send mail with defined transport object
+
+  // console.log('Message sent: %s', info.messageId)
 }
 
 export { registerUser, loginUser, forgotPassword }
