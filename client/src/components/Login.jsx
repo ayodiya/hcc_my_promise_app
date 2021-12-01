@@ -5,9 +5,8 @@ import CircularProgress from '@mui/material/CircularProgress'
 import Icon from '@mui/material/Icon'
 import FacebookIcon from '@mui/icons-material/Facebook'
 import { FcGoogle } from 'react-icons/fc'
-import { useState, useEffect, Fragment } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useNavigate, Link } from 'react-router-dom'
 import { Formik } from 'formik'
 
 import Notification from './Notification'
@@ -64,8 +63,8 @@ const Login = () => {
   }
 
   return (
-    <Fragment>
-      <Slide direction='left' in={true}>
+    <>
+      <Slide direction='left' in>
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <Box
             sx={{
@@ -191,11 +190,13 @@ const Login = () => {
                           <ButtonComponent
                             type='submit'
                             buttonText={
-                              isSubmitting ? (
-                                <CircularProgress sx={{ color: 'white' }} />
-                              ) : (
-                                'Submit'
-                              )
+                              isSubmitting
+                                ? (
+                                  <CircularProgress sx={{ color: 'white' }} />
+                                  )
+                                : (
+                                    'Submit'
+                                  )
                             }
                           />
                         </Box>
@@ -259,7 +260,7 @@ const Login = () => {
                     sx={{
                       display: 'flex',
                       paddingTop: '20px',
-                      paddingBottom: '50px',
+                      paddingBottom: '20px',
                       justifyContent: 'center',
                       color: 'white'
                     }}
@@ -278,6 +279,29 @@ const Login = () => {
                       </Box>
                     </Link>
                   </Box>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      paddingTop: '10px',
+                      paddingBottom: '50px',
+                      justifyContent: 'center',
+                      color: 'white'
+                    }}
+                  >
+                    Forgot password ? Click
+                    <Link to='/forgot-password' style={{ textDecoration: 'none' }}>
+                      <Box
+                        sx={{
+                          paddingLeft: '10px',
+                          fontWeight: 800,
+                          color: 'white',
+                          textDecoration: 'underline'
+                        }}
+                      >
+                        HERE
+                      </Box>
+                    </Link>
+                  </Box>
                 </Box>
               </Box>
             </Paper>
@@ -290,7 +314,7 @@ const Login = () => {
         errorMsg={errorMsg}
         severity='error'
       />
-    </Fragment>
+    </>
   )
 }
 
