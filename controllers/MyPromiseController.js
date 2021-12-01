@@ -10,18 +10,14 @@ async function getMyPromise (req, res) {
   if (userMemoryVerses) {
     AllPromisesArray = AllPromisesArray.filter(val => !userMemoryVerses.memoryVersesIndex.includes(val))
   }
-  // AllPromisesArray = AllPromisesArray.filter(val => !userMemoryVerses?.memoryVersesIndex.includes(val))
+
   const random = AllPromisesArray[Math.floor(Math.random() * AllPromisesArray.length)]
-  console.log('this is random', random)
 
   try {
     const myPromise = await MyPromises.findOne().skip(random)
 
-    // userMemoryVerses.memoryVersesIndex.push(random)
-    // await userMemoryVerses.save()
-
     if (myPromise == null) {
-      return res.status(502).json({ msg: 'Server Error' })
+      return res.status(502).json({ msg: 'Server Error, Please Try Again.' })
     }
 
     if (!userMemoryVerses) {
@@ -68,37 +64,3 @@ async function getMyPromise (req, res) {
 }
 
 export { getMyPromise }
-
-// async function getMyPromise (req, res) {
-//   const myPromiseCount = await MyPromises.count()
-
-//   const { id } = req.user
-
-//   const { memoryVersesIndex } = await UsersMemoryVerses.findOne({ user: id })
-
-//   let AllPromisesArray = [...Array(myPromiseCount + 1).keys()]
-
-//   AllPromisesArray = AllPromisesArray.filter(val => !memoryVersesIndex.includes(val))
-
-//   console.log('this is new', AllPromisesArray)
-
-//   // console.log('this is one', AllPromisesArray)
-
-//   // console.log(memoryVersesIndex)
-
-//   try {
-//     // const random = Math.floor(Math.random() * myPromiseCount)
-//     const random = AllPromisesArray[Math.floor(Math.random() * AllPromisesArray.length)]
-//     console.log('this is random', random)
-//     const myPromises = await MyPromises.findOne().skip(random)
-//     const userMemoryVerses = await UsersMemoryVerses.findOne({ user: id })
-//     userMemoryVerses.memoryVersesIndex.push(random)
-//     await userMemoryVerses.save()
-//     // console.log('this is money', userMemoryVerses.memoryVersesIndex)
-//     res.status(200).json({ myPromises })
-//   } catch (error) {
-//     res.status(502).json({ msg: 'Server Error' })
-//   }
-// }
-
-// export { getMyPromise }
