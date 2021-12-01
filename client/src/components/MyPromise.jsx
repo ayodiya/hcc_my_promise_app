@@ -1,7 +1,6 @@
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import Zoom from '@mui/material/Zoom'
-import Skeleton from '@mui/material/Skeleton'
 import CircularProgress from '@mui/material/CircularProgress'
 import LogoutIcon from '@mui/icons-material/Logout'
 import moment from 'moment'
