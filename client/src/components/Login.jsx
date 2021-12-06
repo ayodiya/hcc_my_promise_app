@@ -265,7 +265,7 @@ const Login = () => {
                       color: 'white'
                     }}
                   >
-                    Already registered ?
+                    Not registered?
                     <Link to='/register' style={{ textDecoration: 'none' }}>
                       <Box
                         sx={{
@@ -288,7 +288,7 @@ const Login = () => {
                       color: 'white'
                     }}
                   >
-                    Forgot password ? Click
+                    Forgot password? Click
                     <Link to='/forgot-password' style={{ textDecoration: 'none' }}>
                       <Box
                         sx={{

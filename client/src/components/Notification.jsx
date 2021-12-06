@@ -7,7 +7,7 @@ const Alert = forwardRef(function Alert (props, ref) {
 })
 
 const Notifications = ({
-  errorMsg,
+  msg,
   openSnackbar,
   handleCloseSnackbar,
   severity
@@ -23,7 +23,7 @@ const Notifications = ({
         severity={severity}
         sx={{ width: '100%' }}
       >
-        {errorMsg}
+        {msg}
       </Alert>
     </Snackbar>
   )

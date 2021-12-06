@@ -18,10 +18,9 @@ const MyPromise = () => {
   const [errorMsg, setErrorMsg] = useState('')
   const [thePromise, setThePromise] = useState({})
   const [canGetNewPromise, setCanGetNewPromise] = useState(false)
+  const token = getToken(tokenName)
 
   const getUserMemoryVerses = useCallback(async () => {
-    const token = getToken(tokenName)
-
     try {
       const { data } = await apiCall(
         'get',
@@ -37,7 +36,7 @@ const MyPromise = () => {
       setErrorMsg(error.response.data.msg)
       setOpenSnackbar(true)
     }
-  }, [])
+  }, [token])
 
   const checkIfTheWeek = useCallback(() => {
     if (thePromise?.createdAt !== undefined) {
@@ -65,7 +64,6 @@ const MyPromise = () => {
   }
 
   const handleGetMyPromise = async () => {
-    const token = getToken(tokenName)
     setThePromise({ memoryVerse: 'loading' })
 
     try {

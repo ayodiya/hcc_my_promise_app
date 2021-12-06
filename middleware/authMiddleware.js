@@ -6,7 +6,7 @@ function auth (req, res, next) {
   if (!token) return res.status(401).send('Access denied. No token Provided')
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET)
+    const decoded = jwt.verify(token, process.env.APP_SECRET)
     req.user = decoded
     next()
   } catch (ex) {

@@ -273,7 +273,7 @@ const Register = () => {
                     color: 'white'
                   }}
                 >
-                  Already registered ?
+                  Already registered?
                   <Link to='/login' style={{ textDecoration: 'none' }}>
                     <Box
                       sx={{
