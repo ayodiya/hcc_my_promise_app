@@ -92,7 +92,7 @@ async function forgotPassword (req, res) {
       from: 'promiseslip@harvesthousecc.org', // sender address
       to: 'devayodiya@gmail.com', // list of receivers
       subject: 'My Promise  - Forgot Password ', // Subject line
-      html: `<h2>Hello ${name}</h2><p>Click the link below to reset your password.</p><p>The link is only valid for 30 minutes</p><p>${process.env.BASE_URL}/password-reset?token=${resetToken}&id=${_id}</p>`
+      html: `<h2>Hello ${name}</h2><p>Click the link below to reset your password.</p><p>The link is only valid for 30 minutes</p><p>${process.env.BASE_URL}/reset-password?token=${resetToken}&id=${_id}</p>`
 
     })
 

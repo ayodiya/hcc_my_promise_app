@@ -160,7 +160,7 @@ const MyPromise = () => {
                 <ButtonComponent
                   buttonText='My Promise'
                   onClick={handleGetMyPromise}
-                  // disabled={canGetNewPromise}
+                  disabled={canGetNewPromise}
                 />
               </Box>
               <Box
