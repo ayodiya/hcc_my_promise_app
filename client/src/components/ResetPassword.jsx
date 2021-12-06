@@ -3,15 +3,14 @@ import Paper from '@mui/material/Paper'
 import Grow from '@mui/material/Grow'
 import CircularProgress from '@mui/material/CircularProgress'
 import { Formik } from 'formik'
-import { useState, useEffect, useCallback } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import Notification from './Notification'
 import InputField from './InputField'
 import InputFieldError from './InputFieldError'
 import ButtonComponent from './ButtonComponent'
 import apiCall from '../utils/apiCall'
-import { getToken, tokenName } from '../utils/localStorage'
 import resetPasswordValidator, { PASSWORD, PASSWORD_LABEL, CONFIRM_PASSWORD, CONFIRM_PASSWORD_LABEL } from '../validators/resetPasswordValidator'
 
 const initialValues = {
@@ -21,39 +20,20 @@ const initialValues = {
 }
 
 const ResetPassword = () => {
-  const { slug } = useParams()
-
+  const navigate = useNavigate()
+  const { search } = useLocation()
   const [openSnackbar, setOpenSnackbar] = useState(false)
   const [snackbarMsg, setSnackbarMsg] = useState('')
   const [severity, setSeverity] = useState('')
-  const [user, setUser] = useState('')
-  const token = getToken(tokenName)
+
+  const userDetailsArray = search.split('=')
+
+  const resetToken = userDetailsArray[1].split('&')[0]
+  const userID = userDetailsArray[2]
 
   const handleCloseSnackbar = () => {
     setOpenSnackbar(false)
   }
-
-  const decodeToken = useCallback(async () => {
-    try {
-      const { data } = await apiCall(
-        'get',
-        '/api/users/decodetoken',
-        '',
-        {
-          Bearer: slug
-        }
-      )
-      setUser(data.user._id)
-    } catch (error) {
-      setSnackbarMsg(error.response.data)
-      setOpenSnackbar(true)
-      setSeverity('error')
-    }
-  }, [slug])
-
-  useEffect(() => {
-    decodeToken()
-  }, [])
 
   return (
     <>
@@ -109,19 +89,23 @@ const ResetPassword = () => {
                     onSubmit={async (values, { setSubmitting }) => {
                       setSubmitting(true)
 
+                      const dataToSubmit = {
+                        user: userID,
+                        resetToken: resetToken,
+                        password: values.password
+                      }
                       try {
                         const { data } = await apiCall(
                           'post',
                           '/api/users/resetPassword',
-                          values,
-                          {
-                            Bearer: token
-                          }
+                          dataToSubmit,
+                          ''
                         )
 
                         setSnackbarMsg(data.msg)
                         setSeverity('success')
                         setOpenSnackbar(true)
+                        navigate('/login')
                       } catch (error) {
                         setSnackbarMsg(error.response.data.msg)
                         setSeverity('error')
