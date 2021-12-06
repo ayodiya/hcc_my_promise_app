@@ -3,8 +3,8 @@ import Paper from '@mui/material/Paper'
 import Grow from '@mui/material/Grow'
 import CircularProgress from '@mui/material/CircularProgress'
 import { Formik } from 'formik'
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useEffect, useCallback } from 'react'
+import { Link, useParams } from 'react-router-dom'
 
 import Notification from './Notification'
 import InputField from './InputField'
@@ -12,22 +12,48 @@ import InputFieldError from './InputFieldError'
 import ButtonComponent from './ButtonComponent'
 import apiCall from '../utils/apiCall'
 import { getToken, tokenName } from '../utils/localStorage'
-import forgotPasswordValidator, { EMAIL, EMAIL_LABEL } from '../validators/forgotPasswordValidator'
+import resetPasswordValidator, { PASSWORD, PASSWORD_LABEL, CONFIRM_PASSWORD, CONFIRM_PASSWORD_LABEL } from '../validators/resetPasswordValidator'
 
 const initialValues = {
-  [EMAIL]: ''
+  [PASSWORD]: '',
+  [CONFIRM_PASSWORD]: ''
 
 }
 
-const ForgotPassword = () => {
+const ResetPassword = () => {
+  const { slug } = useParams()
+
   const [openSnackbar, setOpenSnackbar] = useState(false)
   const [snackbarMsg, setSnackbarMsg] = useState('')
   const [severity, setSeverity] = useState('')
+  const [user, setUser] = useState('')
   const token = getToken(tokenName)
 
   const handleCloseSnackbar = () => {
     setOpenSnackbar(false)
   }
+
+  const decodeToken = useCallback(async () => {
+    try {
+      const { data } = await apiCall(
+        'get',
+        '/api/users/decodetoken',
+        '',
+        {
+          Bearer: slug
+        }
+      )
+      setUser(data.user._id)
+    } catch (error) {
+      setSnackbarMsg(error.response.data)
+      setOpenSnackbar(true)
+      setSeverity('error')
+    }
+  }, [slug])
+
+  useEffect(() => {
+    decodeToken()
+  }, [])
 
   return (
     <>
@@ -75,18 +101,18 @@ const ForgotPassword = () => {
                       paddingBottom: '20px'
                     }}
                   >
-                    Forgot Password?
+                    Reset Password
                   </Box>
                   <Formik
                     initialValues={initialValues}
-                    validationSchema={forgotPasswordValidator}
+                    validationSchema={resetPasswordValidator}
                     onSubmit={async (values, { setSubmitting }) => {
                       setSubmitting(true)
 
                       try {
                         const { data } = await apiCall(
                           'post',
-                          '/api/users/forgotPassword',
+                          '/api/users/resetPassword',
                           values,
                           {
                             Bearer: token
@@ -127,17 +153,34 @@ const ForgotPassword = () => {
                           <Box>
                             <InputField
                               error={
-                              touched[EMAIL] && errors[EMAIL] !== undefined
+                              touched[PASSWORD] && errors[PASSWORD] !== undefined
                             }
                               onBlur={handleBlur}
-                              type='email'
-                              name={EMAIL}
-                              labelName={EMAIL_LABEL}
+                              type='password'
+                              name={PASSWORD}
+                              labelName={PASSWORD_LABEL}
                               onChange={handleChange}
                             />
                           </Box>
-                          {errors[EMAIL] && touched[EMAIL] && (
-                            <InputFieldError errorText={errors[EMAIL]} />
+                          {errors[PASSWORD] && touched[PASSWORD] && (
+                            <InputFieldError errorText={errors[PASSWORD]} />
+                          )}
+                        </Box>
+                        <Box>
+                          <Box>
+                            <InputField
+                              error={
+                              touched[CONFIRM_PASSWORD] && errors[CONFIRM_PASSWORD] !== undefined
+                            }
+                              onBlur={handleBlur}
+                              type='password'
+                              name={CONFIRM_PASSWORD}
+                              labelName={CONFIRM_PASSWORD_LABEL}
+                              onChange={handleChange}
+                            />
+                          </Box>
+                          {errors[CONFIRM_PASSWORD] && touched[CONFIRM_PASSWORD] && (
+                            <InputFieldError errorText={errors[CONFIRM_PASSWORD]} />
                           )}
                         </Box>
                         <Box
@@ -200,4 +243,4 @@ const ForgotPassword = () => {
   )
 }
 
-export default ForgotPassword
+export default ResetPassword
