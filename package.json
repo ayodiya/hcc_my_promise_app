@@ -8,7 +8,7 @@
     "start": "node server.js",
     "server": "nodemon server.js",
     "client": "yarn --cwd ./client start",
-    "dev": "concurrently \"yarn --offline server\" \"yarn --offline client\""
+    "dev": "concurrently \"yarn server\" \"yarn client\""
   },
   "keywords": [],
   "author": "",
@@ -17,7 +17,6 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
-    "crypto-js": "^4.1.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-validator": "^6.13.0",
