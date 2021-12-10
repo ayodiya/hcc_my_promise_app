@@ -27,9 +27,9 @@ app.use(express.json())
 app.use(cors())
 
 // Define Routes
-app.use('/api/mypromise', myPromiseRoutes)
+app.use('/api/myPromise', myPromiseRoutes)
 app.use('/api/users', authRoutes)
-app.use('/api/usermemoryverses', userMemoryVersesRoutes)
+app.use('/api/userMemoryVerses', userMemoryVersesRoutes)
 
 const port = process.env.PORT || 8000
 
