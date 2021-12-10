@@ -1,5 +1,3 @@
-import nodemailer from 'nodemailer'
-import CryptoJS from 'crypto-js'
 import bcrypt from 'bcryptjs'
 import { v4 as uuidv4 } from 'uuid'
 
