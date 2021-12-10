@@ -8,7 +8,7 @@ import {
 import { auth } from '../middleware/authMiddleware.js'
 const router = express.Router()
 
-router.post('/addmemoryverse', auth, addMemoryVerse)
-router.get('/getmemoryverses', auth, getMemoryVerses)
+router.post('/addMemoryVerse', auth, addMemoryVerse)
+router.get('/getMemoryVerses', auth, getMemoryVerses)
 
 export default router
