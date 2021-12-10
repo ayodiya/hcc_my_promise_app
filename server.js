@@ -33,6 +33,7 @@ app.use('/api/usermemoryverses', userMemoryVersesRoutes)
 
 const port = process.env.PORT || 8000
 
+// get  build of react in production mode
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.resolve(__dirname, 'client/build')))
 
@@ -41,4 +42,5 @@ if (process.env.NODE_ENV === 'production') {
   )
 }
 
+// listen to  server port
 app.listen(port, () => console.log(`Server running on port ${port}`))
