@@ -10,7 +10,7 @@ import nodemailerTransporter from '../utils/nodemailerTransporter.js'
 
 const bcryptSalt = process.env.BCRYPT_SALT
 
-// @route   get api/users/register
+// @route   post api/users/register
 // @desc    register User
 // @access public
 
@@ -45,7 +45,7 @@ async function registerUser (req, res) {
   }
 }
 
-// @route   get api/users/login
+// @route   post api/users/login
 // @desc    login User
 // @access public
 
@@ -72,7 +72,7 @@ async function loginUser (req, res) {
   }
 }
 
-// @route   get api/users/forgotPassword
+// @route   post api/users/forgotPassword
 // @desc    forgot password
 // @access public
 
@@ -120,7 +120,7 @@ async function forgotPassword (req, res) {
   }
 }
 
-// @route   get api/users/resetPassword
+// @route   post api/users/resetPassword
 // @desc    reset password
 // @access public
 
