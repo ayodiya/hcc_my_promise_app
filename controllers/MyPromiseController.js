@@ -1,25 +1,38 @@
 import MyPromises from '../models/MyPromise.js'
 import UsersMemoryVerses from '../models/UsersMemoryVerses.js'
 
+// @route   get api/mypromise
+// @desc    reset password
+// @access public
 async function getMyPromise (req, res) {
   const { id } = req.user
-  const myPromisesCount = await MyPromises.count()
-  const userMemoryVerses = await UsersMemoryVerses.findOne({ user: id })
-  let AllPromisesArray = [...Array(myPromisesCount + 1).keys()]
 
+  // find user memory verse in UsersMemoryVerses collection
+  const userMemoryVerses = await UsersMemoryVerses.findOne({ user: id })
+  // get total number of promises in database
+  const myPromisesCount = await MyPromises.count()
+  // create array of number using the range 0 and  myPromisesCount
+  let allPromisesArray = [...Array(myPromisesCount + 1).keys()]
+
+  // remove number if user has already gotten the number before
   if (userMemoryVerses) {
-    AllPromisesArray = AllPromisesArray.filter(val => !userMemoryVerses.memoryVersesIndex.includes(val))
+    allPromisesArray = allPromisesArray.filter(val => !userMemoryVerses.memoryVersesIndex.includes(val))
   }
 
-  const random = AllPromisesArray[Math.floor(Math.random() * AllPromisesArray.length)]
+  // generate a random number from allPromisesArray
+  const random = allPromisesArray[Math.floor(Math.random() * allPromisesArray.length)]
 
   try {
+    // get promise from the myPromises collection corresponding  to the randomly generated number
     const myPromise = await MyPromises.findOne().skip(random)
 
+    // return if myPromise equals to null
     if (myPromise == null) {
       return res.status(502).json({ msg: 'Server Error, Please Try Again.' })
     }
 
+    //  if user does not have any data in UsersMemoryVerses  create
+    //  else update
     if (!userMemoryVerses) {
       await UsersMemoryVerses.create({
         user: id,
