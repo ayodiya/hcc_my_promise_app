@@ -4,6 +4,7 @@ import UsersMemoryVerses from '../models/UsersMemoryVerses.js'
 // @route   get api/mypromise
 // @desc    reset password
 // @access public
+
 async function getMyPromise (req, res) {
   const { id } = req.user
 
