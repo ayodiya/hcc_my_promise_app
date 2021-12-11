@@ -6,26 +6,29 @@ import UsersMemoryVerses from '../models/UsersMemoryVerses.js'
 // @access public
 
 async function getMyPromise (req, res) {
+  let myPromisesIdArray = []
   const { id } = req.user
 
   // find user memory verse in UsersMemoryVerses collection
   const userMemoryVerses = await UsersMemoryVerses.findOne({ user: id })
-  // get total number of promises in database
-  const myPromisesCount = await MyPromises.count()
-  // create array of number using the range 0 and  myPromisesCount
-  let allPromisesArray = [...Array(myPromisesCount + 1).keys()]
+
+  // get all promises id
+  const myPromisesId = await MyPromises.find({}).select('_id')
+
+  // push id as string into mypromisesIdArray
+  myPromisesId.forEach(element => myPromisesIdArray.push(element.id))
 
   // remove number if user has already gotten the number before
   if (userMemoryVerses) {
-    allPromisesArray = allPromisesArray.filter(val => !userMemoryVerses.memoryVersesIndex.includes(val))
+    myPromisesIdArray = myPromisesIdArray.filter(val => !userMemoryVerses.memoryVersesIndex.includes(val))
   }
 
   // generate a random number from allPromisesArray
-  const random = allPromisesArray[Math.floor(Math.random() * allPromisesArray.length)]
+  const random = myPromisesIdArray[Math.floor(Math.random() * myPromisesIdArray.length)]
 
   try {
     // get promise from the myPromises collection corresponding  to the randomly generated number
-    const myPromise = await MyPromises.findOne().skip(random)
+    const myPromise = await MyPromises.findById(random)
 
     // return if myPromise equals to null
     if (myPromise == null) {
