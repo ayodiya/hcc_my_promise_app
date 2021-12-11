@@ -11,7 +11,7 @@
     "dev": "concurrently \"yarn server\" \"yarn client\""
   },
   "keywords": [],
-  "author": "",
+  "author": "Ayodeji Oludiya",
   "license": "ISC",
   "description": "",
   "dependencies": {
