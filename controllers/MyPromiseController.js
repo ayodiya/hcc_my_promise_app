@@ -35,8 +35,7 @@ async function getMyPromise (req, res) {
       return res.status(502).json({ msg: 'Server Error, Please Try Again.' })
     }
 
-    //  if user does not have any data in UsersMemoryVerses  create
-    //  else update
+    //  if user does not have any data in UsersMemoryVerses  create else update
     if (!userMemoryVerses) {
       await UsersMemoryVerses.create({
         user: id,
